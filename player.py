@@ -28,30 +28,37 @@ class Player(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
     def update_image_and_mask(self, new_image):
-        """ Helper function to update image and mask """
         self.image = new_image
         self.mask = pygame.mask.from_surface(self.image)
     
     def move_right(self):
-        if not self.game.check_collision(self, self.game.all_monsters):
+        next_rect = self.rect.copy()
+        next_rect.x += self.velocity
+        if not self.game.check_wall_collision(next_rect):
             self.rect.x += self.velocity
             self.direction = "right"
             self.update_image_and_mask(self.image_right)
     
     def move_left(self):
-        if not self.game.check_collision(self, self.game.all_monsters):
+        next_rect = self.rect.copy()
+        next_rect.x -= self.velocity
+        if not self.game.check_wall_collision(next_rect):
             self.rect.x -= self.velocity
             self.direction = "left"
             self.update_image_and_mask(self.image_left)
     
     def move_up(self):
-        if not self.game.check_collision(self, self.game.all_monsters):
+        next_rect = self.rect.copy()
+        next_rect.y -= self.velocity
+        if not self.game.check_wall_collision(next_rect):
             self.rect.y -= self.velocity
             self.direction = "up"
             self.update_image_and_mask(self.image_up)
     
     def move_down(self):
-        if not self.game.check_collision(self, self.game.all_monsters):
+        next_rect = self.rect.copy()
+        next_rect.y += self.velocity
+        if not self.game.check_wall_collision(next_rect):
             self.rect.y += self.velocity
             self.direction = "down"
             self.update_image_and_mask(self.image_origin)

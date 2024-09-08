@@ -43,6 +43,7 @@ while run:
 
     # affiche l'image correspondant à la dernière direction
     screen.blit(game.player.image, game.player.rect)
+
             
     # event de fermeture
     for event in pygame.event.get():
