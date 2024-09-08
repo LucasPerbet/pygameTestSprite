@@ -25,6 +25,12 @@ while run:
     # affiche le projectile
     game.player.all_projectiles.draw(screen)
     
+    
+    for monster in game.all_monsters:
+        monster.monster_move()
+    
+    game.all_monsters.draw(screen)
+    
     # mouvement du joueur et affichage de l'image correspondante
     if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x + game.player.rect.width < screen.get_width():
         game.player.move_right()
@@ -36,7 +42,7 @@ while run:
         game.player.move_down()
 
     # affiche l'image correspondant à la dernière direction
-    screen.blit(game.player.current_image, game.player.rect)
+    screen.blit(game.player.image, game.player.rect)
             
     # event de fermeture
     for event in pygame.event.get():
