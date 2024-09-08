@@ -5,12 +5,15 @@ from monster import Monster
 class Game:
     
     def __init__(self):
+        # definir si notre jeu started ou no
+        self.is_playing = False
+        # generation du joueur
         self.all_players = pygame.sprite.Group()
         self.player = Player(self)
         self.all_monsters = pygame.sprite.Group()
         self.all_players.add(self.player)
         self.pressed = {}
-        self.spawn_monster()
+        
         
         # Définir les murs comme des pygame.Rect
         self.walls = [
@@ -33,7 +36,16 @@ class Game:
             pygame.Rect(167,590 , 550, 60), # 5
             pygame.Rect(167,750 , 330, 60), # 6
         ]
-    
+        
+    def start(self):
+        self.is_playing = True
+        self.spawn_monster()
+        self.spawn_monster()
+            
+    def game_over(self):
+        self.all_monsters = pygame.sprite.Group()
+        self.is_playing = False
+        
     def spawn_monster(self):
         monster = Monster(self)
         self.all_monsters.add(monster)
@@ -46,3 +58,31 @@ class Game:
             if rect.colliderect(wall):
                 return True
         return False
+
+    def update(self, screen) :
+        
+        for projectile in self.player.all_projectiles:
+            projectile.move()
+    
+        # affiche le projectile
+        self.player.all_projectiles.draw(screen)
+    
+    
+        for monster in self.all_monsters:
+            monster.monster_move()
+    
+        self.all_monsters.draw(screen)
+    
+        # mouvement du joueur et affichage de l'image correspondante
+        if self.pressed.get(pygame.K_RIGHT) and self.player.rect.x + self.player.rect.width < screen.get_width():
+            self.player.move_right()
+        elif self.pressed.get(pygame.K_LEFT) and self.player.rect.x > 0:
+            self.player.move_left()
+        elif self.pressed.get(pygame.K_UP) and self.player.rect.y > 0:
+            self.player.move_up()
+        elif self.pressed.get(pygame.K_DOWN) and self.player.rect.y + self.player.rect.height < screen.get_height():
+            self.player.move_down()
+
+        # affiche l'image correspondant à la dernière direction
+        screen.blit(self.player.image, self.player.rect)
+
