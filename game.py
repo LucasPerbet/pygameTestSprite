@@ -25,7 +25,7 @@ class Game:
             pygame.Rect(656, 645, 60, 880),  #7
             pygame.Rect(490, 750, 60, 900),  #8
             
-             # Murs horizontaux de droite à gauche
+            # Murs horizontaux de droite à gauche
             pygame.Rect(920, 490, 650, 60), # 1
             pygame.Rect(1120, 670, 330, 60), # 2 
             pygame.Rect(683, 1470, 400, 60), # 3 
