@@ -5,8 +5,6 @@ class Monster(pygame.sprite.Sprite):
     def __init__(self, game):
         super().__init__()
         self.game = game
-        self.health = 100
-        self.max_health =100
         self.attack = 5
         self.image = pygame.image.load('assets/orc.png')
         self.rect = self.image.get_rect()
@@ -17,4 +15,6 @@ class Monster(pygame.sprite.Sprite):
     def monster_move(self):
         if not self.game.check_collision(self, self.game.all_players):
             self.rect.y += self.velocity
-        
+    
+    def monster_death(self):
+        self.kill()
